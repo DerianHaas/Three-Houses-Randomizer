@@ -1,0 +1,67 @@
+﻿<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>TypeScript HTML App</title>
+    <link rel="stylesheet" href="app.css" type="text/css" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="classes.js"></script>
+    <script src="characters.js"></script>
+    <script src="randomizer.js"></script>
+    <script src="app.js"></script>
+</head>
+<body>
+    <h1>FE Three Houses Class Randomizer</h1>
+    <div style="display:inline-block;width:100%;padding-top:10px">
+        <div style="float:left;padding-right:100px">
+            Route:
+            <select id="routeSelect">
+                <option value=0>Crimson Flower</option>
+                <option value=1>Silver Snow</option>
+                <option value=2>Azure Moon</option>
+                <option value=3>Verdant Wind</option>
+            </select>
+            <br /><br />
+            Byleth Gender:<br />
+            <input type="radio" name="gender" value=0 checked />Male<br />
+            <input type="radio" name="gender" value=1 />Female<br />
+            <br />
+            <br />
+            <table>
+                <tr>
+                    <td>
+                        Total number of units:
+                    </td>
+                    <td>
+                        <input type="number" min="2" max="99" step="1" id="numUnits" value="10" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Number of units to recruit:
+                    </td>
+                    <td>
+                        <input type="number" min="0" max="99" step="1" id="numRecruits" value="0" />
+                    </td>
+                </tr>
+            </table>
+            <br /><br />
+            Other settings:<br />
+            <input type="checkbox" id="alwaysRetainer" /> Always include retainer<br />
+            <input type="checkbox" id="teachers" /> Include teachers<br />
+            <input type="checkbox" id="anna" /> Include Anna<br /><br />
+            <input type="checkbox" id="alwaysDancer" /> Always include a dancer<br />
+            <input type="checkbox" id="alwaysHealer" /> Always include at least one healer<br /><br />
+            <input type="checkbox" id="canon" /> Avoid canon classes<br /><br />
+            <input type="checkbox" id="repeats" /> Try to avoid repeat classes<br /><br />
+
+            <button id="submit">Randomize</button>
+
+        </div>
+        <div id="result" style="float:left"></div>
+    </div>
+
+</body>
+</html>
