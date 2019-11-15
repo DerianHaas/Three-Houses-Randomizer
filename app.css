@@ -1,1 +1,16 @@
-﻿
+﻿.resultTable {
+    border-collapse: collapse;
+}
+
+.nameCell, .classCell, .buttonCell, .scoreCell {
+    padding: 10px;
+    border: 1px solid black;
+}
+
+.badScore {
+    color: red;
+}
+
+.goodScore {
+    color: green;
+}

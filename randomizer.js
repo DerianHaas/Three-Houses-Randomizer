@@ -13,6 +13,9 @@ let possibleClasses = [
     mortalSavant, falconKnight, warMaster, wyvernLord, greatKnight, bowKnight, gremory, darkKnight, holyKnight,
     enlightenedOne, dancer, emperor, greatLord, barbarossa
 ];
+let classWeights = {};
+let remainingBase = [];
+let remainingRecruitable = [];
 function getBaseUnits(route) {
     return allCharacters.filter(char => char.baseRoute[route]);
 }
@@ -25,7 +28,7 @@ function getPossibleClasses(char) {
             return false;
         if (cls.femaleOnly && char.gender === Gender.M)
             return false;
-        if (cls.byOnly && char.name !== "Byleth")
+        if (cls.byOnly && !char.name.includes("Byleth"))
             return false;
         if (cls.edelOnly && char.name !== "Edelgard")
             return false;
@@ -41,6 +44,9 @@ function getPossibleClasses(char) {
             return false;
         return cls.level === ClassLevel.Advanced || cls.level === ClassLevel.Master || cls.level === ClassLevel.Unique;
     });
+}
+function initializeClassWeights() {
+    possibleClasses.forEach(cls => { classWeights[cls.name] = 1; });
 }
 function getRandomWeightedIndex(weights) {
     let weightSum = weights.reduce((a, b) => a + b);
@@ -65,6 +71,7 @@ function chooseUnits(route, bylethGender, alwaysIncludeRetainer, totalUnits, num
             requiredUnits.push(retainers[route]);
         }
     }
+    requiredUnits.forEach((char) => char.required = true);
     let baseUnits = getBaseUnits(route);
     if (!alwaysIncludeRetainer && retainers[route]) {
         baseUnits.push(retainers[route]);
@@ -85,23 +92,21 @@ function chooseUnits(route, bylethGender, alwaysIncludeRetainer, totalUnits, num
         otherUnits = otherUnits.concat(baseUnits.splice(r, 1));
     }
     otherUnits = otherUnits.concat(recruited);
+    remainingBase = baseUnits;
+    remainingRecruitable = recruitable;
     return requiredUnits.concat(otherUnits);
 }
 function chooseClasses(chars, alwaysHaveDancer, alwaysHaveHealer, avoidCanonClasses, avoidRepeats) {
     let result = [];
-    let classWeights = {};
-    possibleClasses.forEach(cls => { classWeights[cls.name] = 1; });
+    initializeClassWeights();
     let haveDancer = false;
     let haveHealer = false;
     chars.forEach(char => {
-        let possibleClasses = getPossibleClasses(char);
-        let possibleWeights = possibleClasses.map(cls => {
-            if (avoidCanonClasses && char.canonClasses.includes(cls))
-                return 0;
-            return classWeights[cls.name];
+        let chosenClass = chooseClass(char, avoidCanonClasses, []);
+        result.push({
+            char: Object.assign({}, char),
+            class: Object.assign({}, chosenClass)
         });
-        let chosenClass = possibleClasses[getRandomWeightedIndex(possibleWeights)];
-        result.push({ char: char, class: chosenClass });
         if (avoidRepeats) {
             classWeights[chosenClass.name] /= 5;
         }
@@ -137,5 +142,26 @@ function chooseClasses(chars, alwaysHaveDancer, alwaysHaveHealer, avoidCanonClas
         }
     }
     return result;
+}
+function chooseClass(char, avoidCanonClasses, doNotInclude) {
+    let possibleClasses = getPossibleClasses(char);
+    let possibleWeights = possibleClasses.map(cls => {
+        if (doNotInclude.includes(cls))
+            return 0;
+        if (avoidCanonClasses && char.canonClasses.includes(cls))
+            return 0;
+        return classWeights[cls.name];
+    });
+    return possibleClasses[getRandomWeightedIndex(possibleWeights)];
+}
+function calculateClassProficiency(char, cls) {
+    let prof = 1;
+    cls.requiredSkills.forEach(skill => {
+        if (char.strengths.includes(skill))
+            prof += (1 / cls.requiredSkills.length);
+        if (char.weaknesses.includes(skill))
+            prof -= (1 / cls.requiredSkills.length);
+    });
+    return Math.round(prof * 100) / 100;
 }
 //# sourceMappingURL=randomizer.js.map

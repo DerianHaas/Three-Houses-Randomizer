@@ -17,28 +17,35 @@ type Character = {
     baseRoute: boolean[],
     recruitableIn: boolean[],
     gender: Gender,
-    canonClasses: Class[]
+    canonClasses: Class[],
+    required?: boolean,
+    strengths: WeaponSkills[],
+    weaknesses: WeaponSkills[]
 }
 
 var mbyleth: Character = {
-    name: "Byleth",
+    name: "Byleth (M)",
     lord: false,
     retainer: false,
     teacher: true,
     baseRoute: [true, true, true, true],
     recruitableIn: [false, false, false, false],
     canonClasses: [enlightenedOne],
-    gender: Gender.M
+    gender: Gender.M,
+    strengths: [WeaponSkills.Sword, WeaponSkills.Gauntlets, WeaponSkills.Authority, WeaponSkills.Faith],
+    weaknesses: []
 };
 var fbyleth: Character = {
-    name: "Byleth",
+    name: "Byleth (F)",
     lord: false,
     retainer: false,
     teacher: true,
     baseRoute: [true, true, true, true],
     recruitableIn: [false, false, false, false],
     canonClasses: [enlightenedOne],
-    gender: Gender.F
+    gender: Gender.F,
+    strengths: [WeaponSkills.Sword, WeaponSkills.Gauntlets, WeaponSkills.Authority, WeaponSkills.Faith],
+    weaknesses: []
 };
 var edelgard: Character = {
     name: "Edelgard",
@@ -48,7 +55,9 @@ var edelgard: Character = {
     baseRoute: [true, false, false, false],
     recruitableIn: [false, false, false, false],
     canonClasses: [armoredLord,emperor],
-    gender: Gender.F
+    gender: Gender.F,
+    strengths: [WeaponSkills.Sword, WeaponSkills.Axe, WeaponSkills.Authority, WeaponSkills.HeavyArmor, WeaponSkills.Reason],
+    weaknesses: [WeaponSkills.Bow, WeaponSkills.Faith]
 };
 var hubert: Character = {
     name: "Hubert",
@@ -58,7 +67,9 @@ var hubert: Character = {
     baseRoute: [true, false, false, false],
     recruitableIn: [false, false, false, false],
     canonClasses: [darkBishop],
-    gender: Gender.M
+    gender: Gender.M,
+    strengths: [WeaponSkills.Bow, WeaponSkills.Reason, WeaponSkills.Authority, WeaponSkills.Lance],
+    weaknesses: [WeaponSkills.Axe, WeaponSkills.Faith, WeaponSkills.Flying]
 };
 var ferdinand: Character = {
     name: "Ferdinand",
@@ -68,7 +79,9 @@ var ferdinand: Character = {
     baseRoute: [true, true, false, false],
     recruitableIn: [false, false, true, true],
     canonClasses: [paladin,greatKnight],
-    gender: Gender.M
+    gender: Gender.M,
+    strengths: [WeaponSkills.Sword, WeaponSkills.Axe, WeaponSkills.Lance, WeaponSkills.Riding, WeaponSkills.HeavyArmor],
+    weaknesses: []
 };
 var linhardt: Character = {
     name: "Linhardt",
@@ -78,7 +91,9 @@ var linhardt: Character = {
     baseRoute: [true, true, false, false],
     recruitableIn: [false, false, true, true],
     canonClasses: [bishop],
-    gender: Gender.M
+    gender: Gender.M,
+    strengths: [WeaponSkills.Reason, WeaponSkills.Faith],
+    weaknesses: [WeaponSkills.Axe, WeaponSkills.Gauntlets]
 };
 var caspar: Character = {
     name: "Caspar",
@@ -88,7 +103,9 @@ var caspar: Character = {
     baseRoute: [true, true, false, false],
     recruitableIn: [false, false, true, true],
     canonClasses: [grappler, warMaster],
-    gender: Gender.M
+    gender: Gender.M,
+    strengths: [WeaponSkills.Axe, WeaponSkills.Gauntlets],
+    weaknesses: [WeaponSkills.Bow, WeaponSkills.Reason, WeaponSkills.Authority]
 };
 var bernadetta: Character = {
     name: "Bernadetta",
@@ -98,7 +115,9 @@ var bernadetta: Character = {
     baseRoute: [true, true, false, false],
     recruitableIn: [false, false, true, true],
     canonClasses: [sniper, bowKnight],
-    gender: Gender.F
+    gender: Gender.F,
+    strengths: [WeaponSkills.Lance, WeaponSkills.Bow, WeaponSkills.Riding],
+    weaknesses: [WeaponSkills.Sword, WeaponSkills.Axe, WeaponSkills.Gauntlets, WeaponSkills.HeavyArmor]
 };
 var dorothea: Character = {
     name: "Dorothea",
@@ -108,7 +127,9 @@ var dorothea: Character = {
     baseRoute: [true, true, false, false],
     recruitableIn: [false, false, true, true],
     canonClasses: [warlock, gremory],
-    gender: Gender.F
+    gender: Gender.F,
+    strengths: [WeaponSkills.Sword, WeaponSkills.Reason, WeaponSkills.Faith],
+    weaknesses: [WeaponSkills.Riding, WeaponSkills.Flying]
 };
 var petra: Character = {
     name: "Petra",
@@ -118,8 +139,11 @@ var petra: Character = {
     baseRoute: [true, true, false, false],
     recruitableIn: [false, false, true, true],
     canonClasses: [assassin],
-    gender: Gender.F
-};var jeritza: Character = {
+    gender: Gender.F,
+    strengths: [WeaponSkills.Sword, WeaponSkills.Axe, WeaponSkills.Bow, WeaponSkills.Flying],
+    weaknesses: [WeaponSkills.Reason, WeaponSkills.Faith]
+};
+var jeritza: Character = {
     name: "Jeritza",
     lord: false,
     retainer: false,
@@ -127,7 +151,9 @@ var petra: Character = {
     baseRoute: [true, false, false, false],
     recruitableIn: [false, false, false, false],
     canonClasses: [darkKnight],
-    gender: Gender.M
+    gender: Gender.M,
+    strengths: [WeaponSkills.Sword, WeaponSkills.Lance, WeaponSkills.Gauntlets, WeaponSkills.Riding, WeaponSkills.Flying],
+    weaknesses: [WeaponSkills.Faith, WeaponSkills.Authority]
 };
 
 
@@ -140,7 +166,9 @@ var dimitri: Character = {
     baseRoute: [false, false, true, false],
     recruitableIn: [false, false, false, false],
     canonClasses: [greatLord, highLord],
-    gender: Gender.M
+    gender: Gender.M,
+    strengths: [WeaponSkills.Sword, WeaponSkills.Lance, WeaponSkills.Authority, WeaponSkills.Riding],
+    weaknesses: [WeaponSkills.Axe, WeaponSkills.Reason]
 };
 var dedue: Character = {
     name: "Dedue",
@@ -150,7 +178,9 @@ var dedue: Character = {
     baseRoute: [false, false, true, false],
     recruitableIn: [false, false, false, false],
     canonClasses: [fortress, greatKnight],
-    gender: Gender.M
+    gender: Gender.M,
+    strengths: [WeaponSkills.Lance, WeaponSkills.Axe, WeaponSkills.Gauntlets, WeaponSkills.HeavyArmor],
+    weaknesses: [WeaponSkills.Riding, WeaponSkills.Faith, WeaponSkills.Flying]
 };
 var felix: Character = {
     name: "Felix",
@@ -160,7 +190,9 @@ var felix: Character = {
     baseRoute: [false, false, true, false],
     recruitableIn: [true, true, false, true],
     canonClasses: [swordmaster],
-    gender: Gender.M
+    gender: Gender.M,
+    strengths: [WeaponSkills.Sword, WeaponSkills.Bow, WeaponSkills.Gauntlets, WeaponSkills.Reason],
+    weaknesses: [WeaponSkills.Reason, WeaponSkills.Authority]
 };
 var ashe: Character = {
     name: "Ashe",
@@ -170,7 +202,9 @@ var ashe: Character = {
     baseRoute: [false, false, true, false],
     recruitableIn: [true, true, false, true],
     canonClasses: [sniper, bowKnight],
-    gender: Gender.M
+    gender: Gender.M,
+    strengths: [WeaponSkills.Lance, WeaponSkills.Axe, WeaponSkills.Bow],
+    weaknesses: [WeaponSkills.Reason]
 };
 var sylvain: Character = {
     name: "Sylvain",
@@ -180,7 +214,9 @@ var sylvain: Character = {
     baseRoute: [false, false, true, false],
     recruitableIn: [true, true, false, true],
     canonClasses: [paladin],
-    gender: Gender.M
+    gender: Gender.M,
+    strengths: [WeaponSkills.Lance, WeaponSkills.Axe, WeaponSkills.Riding, WeaponSkills.Reason],
+    weaknesses: [WeaponSkills.Bow]
 };
 var mercedes: Character = {
     name: "Mercedes",
@@ -190,7 +226,9 @@ var mercedes: Character = {
     baseRoute: [false, false, true, false],
     recruitableIn: [true, true, false, true],
     canonClasses: [bishop, gremory],
-    gender: Gender.F
+    gender: Gender.F,
+    strengths: [WeaponSkills.Reason, WeaponSkills.Faith, WeaponSkills.Bow],
+    weaknesses: [WeaponSkills.Sword, WeaponSkills.Lance, WeaponSkills.Axe, WeaponSkills.HeavyArmor]
 };
 var annette: Character = {
     name: "Annette",
@@ -200,7 +238,9 @@ var annette: Character = {
     baseRoute: [false, false, true, false],
     recruitableIn: [true, true, false, true],
     canonClasses: [warlock, gremory],
-    gender: Gender.F
+    gender: Gender.F,
+    strengths: [WeaponSkills.Axe, WeaponSkills.Reason, WeaponSkills.Authority],
+    weaknesses: [WeaponSkills.Bow, WeaponSkills.HeavyArmor]
 };
 var ingrid: Character = {
     name: "Ingrid",
@@ -210,7 +250,9 @@ var ingrid: Character = {
     baseRoute: [false, false, true, false],
     recruitableIn: [true, true, false, true],
     canonClasses: [falconKnight],
-    gender: Gender.F
+    gender: Gender.F,
+    strengths: [WeaponSkills.Sword, WeaponSkills.Lance, WeaponSkills.Riding, WeaponSkills.Flying],
+    weaknesses: []
 };
 
 
@@ -222,7 +264,9 @@ var claude: Character = {
     baseRoute: [false, false, false, true],
     recruitableIn: [false, false, false, false],
     canonClasses: [wyvernMaster, barbarossa],
-    gender: Gender.M
+    gender: Gender.M,
+    strengths: [WeaponSkills.Sword, WeaponSkills.Bow, WeaponSkills.Authority, WeaponSkills.Flying, WeaponSkills.Axe],
+    weaknesses: [WeaponSkills.Lance, WeaponSkills.Faith]
 };
 var lorenz: Character = {
     name: "Lorenz",
@@ -232,7 +276,9 @@ var lorenz: Character = {
     baseRoute: [false, false, false, true],
     recruitableIn: [true, true, true, false],
     canonClasses: [paladin, darkKnight],
-    gender: Gender.M
+    gender: Gender.M,
+    strengths: [WeaponSkills.Lance, WeaponSkills.Reason, WeaponSkills.Riding],
+    weaknesses: [WeaponSkills.Gauntlets]
 };
 var raphael: Character = {
     name: "Raphael",
@@ -242,7 +288,9 @@ var raphael: Character = {
     baseRoute: [false, false, false, true],
     recruitableIn: [true, true, true, false],
     canonClasses: [grappler, warMaster],
-    gender: Gender.M
+    gender: Gender.M,
+    strengths: [WeaponSkills.Axe, WeaponSkills.Gauntlets, WeaponSkills.HeavyArmor],
+    weaknesses: [WeaponSkills.Bow, WeaponSkills.Reason, WeaponSkills.Riding]
 };
 var ignatz: Character = {
     name: "Ignatz",
@@ -252,7 +300,9 @@ var ignatz: Character = {
     baseRoute: [false, false, false, true],
     recruitableIn: [true, true, true, false],
     canonClasses: [sniper],
-    gender: Gender.M
+    gender: Gender.M,
+    strengths: [WeaponSkills.Sword, WeaponSkills.Bow, WeaponSkills.Authority, WeaponSkills.Reason],
+    weaknesses: [WeaponSkills.Flying]
 };
 var lysithea: Character = {
     name: "Lysithea",
@@ -262,7 +312,9 @@ var lysithea: Character = {
     baseRoute: [false, false, false, true],
     recruitableIn: [true, true, true, false],
     canonClasses: [warlock, gremory],
-    gender: Gender.F
+    gender: Gender.F,
+    strengths: [WeaponSkills.Reason, WeaponSkills.Faith, WeaponSkills.Authority, WeaponSkills.Sword],
+    weaknesses: [WeaponSkills.Lance, WeaponSkills.Axe, WeaponSkills.HeavyArmor]
 };
 var marianne: Character = {
     name: "Marianne",
@@ -272,7 +324,9 @@ var marianne: Character = {
     baseRoute: [false, false, false, true],
     recruitableIn: [true, true, true, false],
     canonClasses: [bishop, holyKnight],
-    gender: Gender.F
+    gender: Gender.F,
+    strengths: [WeaponSkills.Sword, WeaponSkills.Faith, WeaponSkills.Riding, WeaponSkills.Flying, WeaponSkills.Lance],
+    weaknesses: [WeaponSkills.Gauntlets, WeaponSkills.HeavyArmor]
 };
 var leonie: Character = {
     name: "Leonie",
@@ -282,7 +336,9 @@ var leonie: Character = {
     baseRoute: [false, false, false, true],
     recruitableIn: [true, true, true, false],
     canonClasses: [paladin],
-    gender: Gender.F
+    gender: Gender.F,
+    strengths: [WeaponSkills.Lance, WeaponSkills.Bow, WeaponSkills.Riding],
+    weaknesses: []
 };
 var hilda: Character = {
     name: "Hilda",
@@ -292,7 +348,9 @@ var hilda: Character = {
     baseRoute: [false, false, false, true],
     recruitableIn: [false, true, true, false],
     canonClasses: [warrior],
-    gender: Gender.F
+    gender: Gender.F,
+    strengths: [WeaponSkills.Lance, WeaponSkills.Axe, WeaponSkills.HeavyArmor],
+    weaknesses: [WeaponSkills.Faith, WeaponSkills.Authority]
 };
 
 
@@ -304,7 +362,9 @@ var seteth: Character = {
     baseRoute: [false, true, false, false],
     recruitableIn: [false, false, true, true],
     canonClasses: [wyvernRider, wyvernLord],
-    gender: Gender.M
+    gender: Gender.M,
+    strengths: [WeaponSkills.Sword, WeaponSkills.Lance, WeaponSkills.Axe, WeaponSkills.Flying, WeaponSkills.Authority],
+    weaknesses: [WeaponSkills.Riding]
 };
 var flayn: Character = {
     name: "Flayn",
@@ -314,7 +374,9 @@ var flayn: Character = {
     baseRoute: [false, true, true, true],
     recruitableIn: [false, false, false, false],
     canonClasses: [bishop],
-    gender: Gender.F
+    gender: Gender.F,
+    strengths: [WeaponSkills.Lance, WeaponSkills.Faith, WeaponSkills.Reason],
+    weaknesses: [WeaponSkills.HeavyArmor, WeaponSkills.Riding]
 };
 var hanneman: Character = {
     name: "Hanneman",
@@ -324,7 +386,9 @@ var hanneman: Character = {
     baseRoute: [false, false, false, false],
     recruitableIn: [true, true, true, true],
     canonClasses: [warlock],
-    gender: Gender.M
+    gender: Gender.M,
+    strengths: [WeaponSkills.Bow, WeaponSkills.Reason, WeaponSkills.Riding],
+    weaknesses: [WeaponSkills.HeavyArmor, WeaponSkills.Flying]
 };
 var manuela: Character = {
     name: "Manuela",
@@ -334,7 +398,9 @@ var manuela: Character = {
     baseRoute: [false, false, false, false],
     recruitableIn: [true, true, true, true],
     canonClasses: [bishop, assassin],
-    gender: Gender.F
+    gender: Gender.F,
+    strengths: [WeaponSkills.Sword, WeaponSkills.Faith, WeaponSkills.Flying],
+    weaknesses: [WeaponSkills.Reason, WeaponSkills.HeavyArmor]
 };
 var gilbert: Character = {
     name: "Gilbert",
@@ -344,7 +410,9 @@ var gilbert: Character = {
     baseRoute: [false, false, true, false],
     recruitableIn: [false, false, false, false],
     canonClasses: [fortress, greatKnight],
-    gender: Gender.M
+    gender: Gender.M,
+    strengths: [WeaponSkills.Lance, WeaponSkills.Axe, WeaponSkills.HeavyArmor, WeaponSkills.Riding],
+    weaknesses: []
 };
 var alois: Character = {
     name: "Alois",
@@ -354,7 +422,9 @@ var alois: Character = {
     baseRoute: [false, false, false, false],
     recruitableIn: [true, true, true, true],
     canonClasses: [warrior],
-    gender: Gender.M
+    gender: Gender.M,
+    strengths: [WeaponSkills.Axe, WeaponSkills.Gauntlets, WeaponSkills.HeavyArmor],
+    weaknesses: [WeaponSkills.Reason, WeaponSkills.Flying]
 };
 var catherine: Character = {
     name: "Catherine",
@@ -364,7 +434,9 @@ var catherine: Character = {
     baseRoute: [false, false, false, false],
     recruitableIn: [false, true, true, true],
     canonClasses: [swordmaster],
-    gender: Gender.F
+    gender: Gender.F,
+    strengths: [WeaponSkills.Sword, WeaponSkills.Gauntlets],
+    weaknesses: [WeaponSkills.Reason]
 };
 var shamir: Character = {
     name: "Shamir",
@@ -374,7 +446,9 @@ var shamir: Character = {
     baseRoute: [false, false, false, false],
     recruitableIn: [true, true, true, true],
     canonClasses: [sniper, bowKnight],
-    gender: Gender.F
+    gender: Gender.F,
+    strengths: [WeaponSkills.Lance, WeaponSkills.Bow],
+    weaknesses: [WeaponSkills.Faith]
 };
 var cyril: Character = {
     name: "Cyril",
@@ -384,7 +458,9 @@ var cyril: Character = {
     baseRoute: [false, false, false, false],
     recruitableIn: [false, true, true, true],
     canonClasses: [wyvernRider, wyvernLord],
-    gender: Gender.M
+    gender: Gender.M,
+    strengths: [WeaponSkills.Lance, WeaponSkills.Bow, WeaponSkills.Riding, WeaponSkills.Flying, WeaponSkills.Axe],
+    weaknesses: [WeaponSkills.Reason, WeaponSkills.Faith]
 };
 var anna: Character = {
     name: "Anna",
@@ -394,5 +470,7 @@ var anna: Character = {
     baseRoute: [false, false, false, false],
     recruitableIn: [true, true, true, true],
     canonClasses: [myrmidon],
-    gender: Gender.F
+    gender: Gender.F,
+    strengths: [WeaponSkills.Sword, WeaponSkills.Axe, WeaponSkills.Bow, WeaponSkills.Faith, WeaponSkills.Riding],
+    weaknesses: [WeaponSkills.Reason, WeaponSkills.Authority]
 };

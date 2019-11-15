@@ -15,6 +15,9 @@ let possibleClasses = [
     enlightenedOne, dancer, emperor, greatLord, barbarossa
 ];
 
+let classWeights: { [className: string]: number } = {};
+let remainingBase: Character[] = [];
+let remainingRecruitable: Character[] = [];
 
 function getBaseUnits(route: Route): Character[] {
     return allCharacters.filter(char => char.baseRoute[route]);
@@ -28,7 +31,7 @@ function getPossibleClasses(char: Character): Class[] {
     return possibleClasses.filter(cls => {
         if (cls.maleOnly && char.gender === Gender.F) return false;
         if (cls.femaleOnly && char.gender === Gender.M) return false;
-        if (cls.byOnly && char.name !== "Byleth") return false;
+        if (cls.byOnly && !char.name.includes("Byleth")) return false;
         if (cls.edelOnly && char.name !== "Edelgard") return false;
         if (cls.dimitriOnly && char.name !== "Dimitri") return false;
         if (cls.claudeOnly && char.name !== "Claude") return false;
@@ -39,6 +42,9 @@ function getPossibleClasses(char: Character): Class[] {
     });
 }
 
+function initializeClassWeights(): void {
+    possibleClasses.forEach(cls => { classWeights[cls.name] = 1 });
+}
 
 function getRandomWeightedIndex(weights: number[]): number {
     let weightSum = weights.reduce((a, b) => a + b);
@@ -71,6 +77,8 @@ function chooseUnits(route: Route, bylethGender: Gender, alwaysIncludeRetainer: 
         }
     }
 
+    requiredUnits.forEach((char) => char.required = true);
+
     let baseUnits = getBaseUnits(route);
     if (!alwaysIncludeRetainer && retainers[route]) {
         baseUnits.push(retainers[route]);
@@ -91,27 +99,27 @@ function chooseUnits(route: Route, bylethGender: Gender, alwaysIncludeRetainer: 
         otherUnits = otherUnits.concat(baseUnits.splice(r, 1));
     }
     otherUnits = otherUnits.concat(recruited);
+    remainingBase = baseUnits;
+    remainingRecruitable = recruitable;
     return requiredUnits.concat(otherUnits);
 }
 
 
 function chooseClasses(chars: Character[], alwaysHaveDancer: boolean, alwaysHaveHealer: boolean, avoidCanonClasses: boolean, avoidRepeats: boolean): { char: Character, class: Class }[] {
     let result: { char: Character, class: Class }[] = [];
-    let classWeights: { [className: string]: number } = {};
-    possibleClasses.forEach(cls => { classWeights[cls.name] = 1 });
+
+    initializeClassWeights();
 
     let haveDancer = false;
     let haveHealer = false;
 
     chars.forEach(char => {
-        let possibleClasses = getPossibleClasses(char);
-        let possibleWeights = possibleClasses.map(cls => {
-            if (avoidCanonClasses && char.canonClasses.includes(cls)) return 0;
-            return classWeights[cls.name]
-        });
+        let chosenClass = chooseClass(char, avoidCanonClasses, []);
 
-        let chosenClass = possibleClasses[getRandomWeightedIndex(possibleWeights)];
-        result.push({ char: char, class: chosenClass });
+        result.push({
+            char: Object.assign({}, char),
+            class: Object.assign({}, chosenClass)
+        });
 
         if (avoidRepeats) {
             classWeights[chosenClass.name] /= 5;
@@ -151,4 +159,28 @@ function chooseClasses(chars: Character[], alwaysHaveDancer: boolean, alwaysHave
     }
 
     return result;
+}
+
+
+function chooseClass(char: Character, avoidCanonClasses: boolean, doNotInclude: Class[]): Class {
+    let possibleClasses = getPossibleClasses(char);
+    let possibleWeights = possibleClasses.map(cls => {
+        if (doNotInclude.includes(cls)) return 0;
+        if (avoidCanonClasses && char.canonClasses.includes(cls)) return 0;
+        return classWeights[cls.name]
+    });
+
+    return possibleClasses[getRandomWeightedIndex(possibleWeights)];
+}
+
+
+function calculateClassProficiency(char: Character, cls: Class): number {
+    let prof = 1;
+
+    cls.requiredSkills.forEach(skill => {
+        if (char.strengths.includes(skill)) prof += (1 / cls.requiredSkills.length);
+        if (char.weaknesses.includes(skill)) prof -= (1 / cls.requiredSkills.length);
+    });
+
+    return Math.round(prof * 100) / 100;
 }
