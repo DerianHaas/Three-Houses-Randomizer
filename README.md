@@ -1,3 +1,3 @@
 # Three-Houses-Randomizer
 
-View at https://derianhaas.github.io/Three-Houses-Randomizer/
+View at https://bsqrdminus4ac.github.io/Three-Houses-Randomizer/
